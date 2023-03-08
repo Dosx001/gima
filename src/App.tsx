@@ -1,3 +1,4 @@
+import type { JSX } from "solid-js";
 import { createSignal } from "solid-js";
 import logo from "./assets/logo.svg";
 import { invoke } from "@tauri-apps/api/tauri";
@@ -37,13 +38,17 @@ function App() {
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Enter a name..."
           />
-          <button type="button" onClick={greet}>
+          <button
+            type="button"
+            onClick={
+              greet as JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>
+            }
+          >
             Greet
           </button>
         </div>
       </div>
-
-      <p>{greetMsg}</p>
+      <p>{greetMsg()}</p>
     </div>
   );
 }
