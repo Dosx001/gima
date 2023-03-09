@@ -1,4 +1,3 @@
-import "./App.scss";
 import { WebviewWindow } from "@tauri-apps/api/window";
 
 function App() {
@@ -6,15 +5,17 @@ function App() {
     <div class="box">
       <h1 class="mt-4 text-4xl">GIMA</h1>
       <button
+        class="rounded border border-black bg-gray-500 p-1 shadow shadow-black"
         onClick={() => {
           const webview = new WebviewWindow("overlay", {
             url: "overlay.html",
+            transparent: true,
           });
           webview
-            .once("tauri://created", () => { })
-            .catch((e) => console.error(e));
-          webview
-            .once("tauri://error", (e) => console.error(e))
+            .once("tauri://created", () => {
+              webview.maximize().catch(() => { });
+              webview.setAlwaysOnTop(true).catch(() => { });
+            })
             .catch((e) => console.error(e));
         }}
       >

@@ -18,7 +18,9 @@
         "open": true
       },
       "window": {
-        "create": true
+        "create": true,
+        "maximize": true,
+        "setAlwaysOnTop": true
       }
     },
     "bundle": {
