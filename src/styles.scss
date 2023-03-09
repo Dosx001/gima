@@ -6,6 +6,9 @@
 @layer components {
 }
 @layer utilities {
+  .box {
+    @apply mx-auto w-11/12 md:w-3/4 3xl:w-1/2;
+  }
 }
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
