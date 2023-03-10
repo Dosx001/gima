@@ -14,8 +14,13 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["solid"],
-  "extends": ["eslint:recommended", "plugin:solid/recommended"],
+  "plugins": ["solid", "@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:solid/recommended"
+  ],
   "rules": {
     "@typescript-eslint/consistent-type-imports": "warn",
     "@typescript-eslint/no-non-null-assertion": "off",
