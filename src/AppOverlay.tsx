@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-
 import { emit } from "@tauri-apps/api/event";
 import { For } from "solid-js";
+import ResizableBox from "./components/ResizableBox";
 
 const AppOverlay = () => {
   return (
@@ -29,6 +29,7 @@ const AppOverlay = () => {
           </button>
         )}
       </For>
+      <ResizableBox />
     </div>
   );
 };
