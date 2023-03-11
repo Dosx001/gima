@@ -1,6 +1,7 @@
 import { createSignal } from "solid-js";
 
 const ResizableBox = () => {
+  let drag: HTMLElement | undefined;
   const [height, setHeight] = createSignal(300);
   const [width, setWidth] = createSignal(300);
   const [left, setLeft] = createSignal(200);
@@ -16,29 +17,35 @@ const ResizableBox = () => {
     const startHeight = height();
     const startLeft = left();
     const startTop = top();
+    const draggable = e.target === drag;
     const handleMouseMove = (e: MouseEvent) => {
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
-      switch (direction) {
-        default:
-          setHeight(() => {
-            const h = Math.max(minHeight, startHeight - dy);
-            if (h !== 300) setTop(startTop + dy);
-            return h;
-          });
-          break;
-        case "right":
-          setWidth(Math.max(minWidth, startWidth + dx));
-          break;
-        case "bottom":
-          setHeight(Math.max(minHeight, startHeight + dy));
-          break;
-        case "left":
-          setWidth(() => {
-            const w = Math.max(minWidth, startWidth - dx);
-            if (w !== 300) setLeft(startLeft + dx);
-            return w;
-          });
+      if (draggable) {
+        setLeft(startLeft + dx);
+        setTop(startTop + dy);
+      } else {
+        switch (direction) {
+          default:
+            setHeight(() => {
+              const h = Math.max(minHeight, startHeight - dy);
+              if (h !== 300) setTop(startTop + dy);
+              return h;
+            });
+            break;
+          case "right":
+            setWidth(Math.max(minWidth, startWidth + dx));
+            break;
+          case "bottom":
+            setHeight(Math.max(minHeight, startHeight + dy));
+            break;
+          case "left":
+            setWidth(() => {
+              const w = Math.max(minWidth, startWidth - dx);
+              if (w !== 300) setLeft(startLeft + dx);
+              return w;
+            });
+        }
       }
     };
     const handleMouseUp = () => {
@@ -50,7 +57,7 @@ const ResizableBox = () => {
   };
   return (
     <div
-      class="absolute border-2 border-green-500 p-4"
+      class="absolute select-none border-2 border-green-500 p-4"
       style={{
         height: `${height()}px`,
         width: `${width()}px`,
@@ -58,6 +65,13 @@ const ResizableBox = () => {
         top: `${top()}px`,
       }}
     >
+      <span
+        ref={drag}
+        class="absolute bottom-[46%] cursor-move text-green-500"
+        onMouseDown={(e) => handleMouseDown(e, "")}
+      >
+        +
+      </span>
       <span
         class="absolute left-1/2 top-[-8px] h-4 w-4 cursor-ns-resize rounded-full bg-green-500"
         onMouseDown={(e) => handleMouseDown(e, "top")}
