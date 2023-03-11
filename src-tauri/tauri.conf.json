@@ -19,7 +19,7 @@
       },
       "window": {
         "create": true,
-        "maximize": true,
+        "setFullscreen": true,
         "setAlwaysOnTop": true
       }
     },
