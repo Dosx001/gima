@@ -17,7 +17,10 @@ fn screenshot(x: i32, y: i32, width: u32, height: u32) {
         .resize(width * 2, height * 2, imageops::Lanczos3)
         .grayscale()
         .save("target/upscale_grayscale.png")
-        .unwrap()
+        .unwrap();
+    let res = tesseract::ocr("target/upscale_grayscale.png", "eng").unwrap();
+    print!("{}", res);
+    println!("- - - - - - - - - - - - - - - - - - - - ");
 }
 
 fn main() {
