@@ -7,7 +7,7 @@ use std::fs;
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn screenshot(x: i32, y: i32, width: u32, height: u32) {
+fn get_text(x: i32, y: i32, width: u32, height: u32) {
     let screen = Screen::from_point(0, 0).unwrap();
     let image = screen.capture_area(x, y, width, height).unwrap();
     let buffer = image.buffer();
@@ -25,7 +25,7 @@ fn screenshot(x: i32, y: i32, width: u32, height: u32) {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![screenshot])
+        .invoke_handler(tauri::generate_handler![get_text])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

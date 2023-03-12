@@ -1,13 +1,13 @@
 import { createSignal } from "solid-js";
 
-const ResizableBox = () => {
+const ResizableBox = (props: { color: string }) => {
   let drag: HTMLElement | undefined;
-  const [height, setHeight] = createSignal(300);
-  const [width, setWidth] = createSignal(300);
+  const [height, setHeight] = createSignal(200);
+  const [width, setWidth] = createSignal(200);
   const [left, setLeft] = createSignal(200);
   const [top, setTop] = createSignal(200);
-  const minWidth = 300;
-  const minHeight = 300;
+  const minWidth = 200;
+  const minHeight = 200;
   const handleMouseDown = (e: MouseEvent, direction: string) => {
     e.stopPropagation();
     e.preventDefault();
@@ -29,7 +29,7 @@ const ResizableBox = () => {
           default:
             setHeight(() => {
               const h = Math.max(minHeight, startHeight - dy);
-              if (h !== 300) setTop(startTop + dy);
+              if (h !== 200) setTop(startTop + dy);
               return h;
             });
             break;
@@ -42,7 +42,7 @@ const ResizableBox = () => {
           case "left":
             setWidth(() => {
               const w = Math.max(minWidth, startWidth - dx);
-              if (w !== 300) setLeft(startLeft + dx);
+              if (w !== 200) setLeft(startLeft + dx);
               return w;
             });
         }
@@ -57,35 +57,41 @@ const ResizableBox = () => {
   };
   return (
     <div
-      class="absolute select-none border-2 border-green-500 p-4"
+      class="absolute select-none p-4"
       style={{
         height: `${height()}px`,
         width: `${width()}px`,
         left: `${left()}px`,
         top: `${top()}px`,
+        border: `2px solid ${props.color}`,
       }}
     >
       <span
         ref={drag}
-        class="absolute bottom-[46%] cursor-move text-green-500"
+        class="absolute bottom-[46%] cursor-move"
+        style={{ color: props.color }}
         onMouseDown={(e) => handleMouseDown(e, "")}
       >
         +
       </span>
       <span
-        class="absolute left-1/2 top-[-8px] h-4 w-4 cursor-ns-resize rounded-full bg-green-500"
+        class="absolute left-1/2 top-[-8px] h-4 w-4 cursor-ns-resize rounded-full"
+        style={{ background: props.color }}
         onMouseDown={(e) => handleMouseDown(e, "top")}
       />
       <span
-        class="absolute right-[-8px] bottom-1/2 h-4 w-4 cursor-ew-resize rounded-full bg-green-500"
+        class="absolute right-[-8px] bottom-1/2 h-4 w-4 cursor-ew-resize rounded-full"
+        style={{ background: props.color }}
         onMouseDown={(e) => handleMouseDown(e, "right")}
       />
       <span
-        class="absolute left-1/2 bottom-[-8px] h-4 w-4 cursor-ns-resize rounded-full bg-green-500"
+        class="absolute left-1/2 bottom-[-8px] h-4 w-4 cursor-ns-resize rounded-full"
+        style={{ background: props.color }}
         onMouseDown={(e) => handleMouseDown(e, "bottom")}
       />
       <span
-        class="absolute left-[-8px] bottom-1/2 h-4 w-4 cursor-ew-resize rounded-full bg-green-500"
+        class="absolute left-[-8px] bottom-1/2 h-4 w-4 cursor-ew-resize rounded-full"
+        style={{ background: props.color }}
         onMouseDown={(e) => handleMouseDown(e, "left")}
       />
     </div>
